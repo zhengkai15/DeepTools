@@ -1,0 +1,62 @@
+# config.yaml
+
+debug:
+  verbose: false
+
+data:
+  feature_path: ""
+  gt_path: ""
+  online_path_ft: ""
+  online_path_gt: ""
+  catch_path: ""
+  log_transform: true
+  train_time_beg: "2019-01-01"
+  train_time_end: "2023-03-01"
+  valid_time_beg: "2023-03-01"
+  valid_time_end: "2023-08-01"
+
+env:
+  gpus_id: "0"
+
+seed:
+  random_seed: 6
+
+exp:
+  dir: ""
+  best_model_path: null
+
+optim:
+  name: "adamw"
+  weight_decay: 0.2
+
+lr:
+  value: 0.001
+  scheduler:
+    name: "ReduceLROnPlateau"
+    mode: "max"
+    monitor: "ts50"
+    threshold: 0.0004
+    factor: 0.5
+    patience: 5
+    min_lr: 0.0001
+
+train:
+  batch_size: 1
+  start_epoch: 0
+  num_epochs: 100
+  num_workers: 4
+  visualize: false
+  save_results: false
+  early_stopping:
+    patience: 20
+    monitor: "ts50"
+    mode: "max"
+
+infer:
+  batch_size: 1
+
+loss:
+  name: "WeightedMSELoss"  # WeightedMSELoss LabelBasedWeightedRegressionLoss
+
+model:
+  name: "unet" 
