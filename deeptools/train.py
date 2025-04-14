@@ -306,7 +306,12 @@ def eval_epoches(
             logger.info(f"wrong {config['lr']['scheduler']['monitor']}")
         
         if scheduler is not None:
-            scheduler.step(monitor_metric)
+            if config["lr"]["scheduler"]["name"] in ["ReduceLROnPlateau","WarmupReduceLROnPlateau"]:
+                scheduler.step(monitor_metric)
+            elif config["lr"]["scheduler"]["name"] in ["CosineAnnealingLR", "WarmupCosineAnnealingLR"]:
+                scheduler.step()
+            else:
+                scheduler.step()
         # return
         return losses_valid, task_metrics
     
